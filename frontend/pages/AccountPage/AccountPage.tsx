@@ -10,7 +10,6 @@ import deepDifference from "utilities/deep_difference";
 import formatErrorResponse from "utilities/format_error_response";
 
 import Button from "components/buttons/Button";
-// @ts-ignore
 import ChangeEmailForm from "components/forms/ChangeEmailForm";
 // @ts-ignore
 import ChangePasswordForm from "components/forms/ChangePasswordForm";
@@ -18,7 +17,6 @@ import ChangePasswordForm from "components/forms/ChangePasswordForm";
 import Modal from "components/Modal";
 
 import SidePanelPage from "components/SidePanelPage";
-// @ts-ignore
 import UserSettingsForm from "components/forms/UserSettingsForm";
 import InfoBanner from "components/InfoBanner";
 import MainContent from "components/MainContent";

@@ -10,16 +10,16 @@ describe("<ChangeEmailForm />", () => {
     onCancel: jest.fn(),
   };
   const password = "p@ssw0rd";
+
   it("renders the component correctly", () => {
     render(<ChangeEmailForm {...props} />);
 
     expect(screen.getByLabelText("Password")).toBeInTheDocument();
-
     expect(screen.getByRole("button", { name: "Submit" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cancel" })).toBeInTheDocument();
   });
 
-  it("it should not submit the form when the password form field have not been filled out", async () => {
+  it("should not submit the form when the password field has not been filled out", async () => {
     const { user } = renderWithSetup(<ChangeEmailForm {...props} />);
 
     await user.click(screen.getByRole("button", { name: "Submit" }));
@@ -30,7 +30,7 @@ describe("<ChangeEmailForm />", () => {
     expect(props.handleSubmit).not.toHaveBeenCalled();
   });
 
-  it("it should submit the form when the password form field have not been filled out", async () => {
+  it("should submit the form when the password field has been filled out", async () => {
     const { user } = renderWithSetup(<ChangeEmailForm {...props} />);
 
     await user.type(screen.getByLabelText("Password"), password);
@@ -39,7 +39,7 @@ describe("<ChangeEmailForm />", () => {
     expect(props.handleSubmit).toHaveBeenCalledWith({ password: "p@ssw0rd" });
   });
 
-  it("it should call onCancel function when Cancel button is pressed", async () => {
+  it("should call onCancel function when Cancel button is pressed", async () => {
     const { user } = renderWithSetup(<ChangeEmailForm {...props} />);
 
     await user.type(screen.getByLabelText("Password"), password);

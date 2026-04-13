@@ -7,8 +7,10 @@ import UserSettingsForm from "components/forms/UserSettingsForm";
 
 describe("UserSettingsForm - component", () => {
   const defaultProps = {
+    formData: { email: "", name: "", position: "" },
     handleSubmit: jest.fn(),
     onCancel: jest.fn(),
+    smtpConfigured: false,
   };
 
   it("renders correctly", () => {
@@ -27,9 +29,8 @@ describe("UserSettingsForm - component", () => {
   it("should pass validation checks for input fields", async () => {
     render(<UserSettingsForm {...defaultProps} />);
 
-    // when
     fireEvent.click(screen.getByRole("button", { name: "Update" }));
-    // then
+
     expect(defaultProps.handleSubmit).not.toHaveBeenCalled();
     expect(
       await screen.findByText("Email field must be completed")
@@ -41,7 +42,7 @@ describe("UserSettingsForm - component", () => {
 
   it("should throw validation error when invalid email is entered", async () => {
     const { user } = renderWithSetup(
-      <UserSettingsForm {...{ ...defaultProps, smtpConfigured: true }} />
+      <UserSettingsForm {...defaultProps} smtpConfigured />
     );
 
     await user.type(
@@ -60,10 +61,11 @@ describe("UserSettingsForm - component", () => {
     const expectedFormData = {
       email: "email@example.com",
       name: "Jim Example",
+      position: "",
     };
 
     const { user } = renderWithSetup(
-      <UserSettingsForm {...{ ...defaultProps, smtpConfigured: true }} />
+      <UserSettingsForm {...defaultProps} smtpConfigured />
     );
 
     await user.type(
@@ -80,19 +82,19 @@ describe("UserSettingsForm - component", () => {
   });
 
   it("initializes the form with the users data", () => {
-    const user = {
+    const formData = {
       email: "email@example.com",
       name: "Jim Example",
+      position: "",
     };
-    const props = { ...defaultProps, formData: user };
 
-    render(<UserSettingsForm {...props} />);
+    render(<UserSettingsForm {...defaultProps} formData={formData} />);
 
     expect(
       screen.getByRole("textbox", { name: /email \(required\)/i })
-    ).toHaveValue(user.email);
+    ).toHaveValue(formData.email);
     expect(
       screen.getByRole("textbox", { name: /full name \(required\)/i })
-    ).toHaveValue(user.name);
+    ).toHaveValue(formData.name);
   });
 });
